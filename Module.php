@@ -7,10 +7,10 @@
  */
 namespace ApigilityOauth2Adapter;
 
-use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 use Zend\Config\Config;
+use ZF\Apigility\Provider\ApigilityProviderInterface;
 
-class Module implements AutoloaderProviderInterface
+class Module implements ApigilityProviderInterface
 {
     public function getConfig()
     {
@@ -27,7 +27,7 @@ class Module implements AutoloaderProviderInterface
     public function getAutoloaderConfig()
     {
         return [
-            'Zend\Loader\StandardAutoloader' => [
+            'ZF\Apigility\Autoloader' => [
                 'namespaces' => [
                     __NAMESPACE__ => __DIR__ . '/src',
                 ],

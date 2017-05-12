@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Doctrine\ORM\Mapping\Id;
 use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use ApigilityUser\DoctrineEntity\User;
 
 /**
  * Class OauthAccessToken
@@ -30,9 +33,10 @@ class OauthAccessToken
     protected $client_id;
 
     /**
-     * @Column(type="string", length=255, nullable=true)
+     * @ManyToOne(targetEntity="ApigilityUser\DoctrineEntity\User", inversedBy="tokens")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
      */
-    protected $user_id;
+    protected $user;
 
     /**
      * @Column(type="datetime", nullable=false)
