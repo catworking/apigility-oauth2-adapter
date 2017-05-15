@@ -12,11 +12,17 @@ class AccessTokenResource extends ApigilityResource
      */
     protected $accessTokenService;
     
+    /**
+     * @var \ApigilityUser\Service\UserService
+     */
+    protected $userService;
+    
     public function __construct(ServiceManager $services)
     {
         parent::__construct($services);
     
         $this->accessTokenService = $this->serviceManager->get('ApigilityOauth2Adapter\Service\AccessTokenService');
+        $this->userService = $services->get('ApigilityUser\Service\UserService');
     }
     
     /**
@@ -39,7 +45,8 @@ class AccessTokenResource extends ApigilityResource
     public function delete($id)
     {
         try {
-            return $this->accessTokenService->deleteAccessToken($id);
+            $user = $this->userService->getAuthUser();
+            return $this->accessTokenService->deleteAccessToken($id, $user);
         } catch (\Exception $exception) {
             return new ApiProblem($exception->getCode(), $exception->getMessage());
         }
@@ -71,10 +78,17 @@ class AccessTokenResource extends ApigilityResource
         }
     }
 
+    /**
+     * Fetch all or a subset of resources
+     *
+     * @param  array $params
+     * @return ApiProblem|mixed
+     */
     public function fetchAll($params = [])
     {
         try {
-            return new AccessTokenCollection($this->accessTokenService->getAccessTokens($params), $this->serviceManager);
+            $user = $this->userService->getAuthUser();
+            return new AccessTokenCollection($this->accessTokenService->getAccessTokens($params, $user), $this->serviceManager);
         } catch (\Exception $exception) {
             return new ApiProblem($exception->getCode(), $exception->getMessage());
         }

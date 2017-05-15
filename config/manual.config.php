@@ -31,6 +31,9 @@ return [
                     ],
                 ],
             ],
+            'map' => [
+                'ApigilityOauth2Adapter\\V1' => 'apigilityoauth2adapter',
+            ],
         ],
     ],
     // 配置token持续刷新支持，以及refresh_token的有效时间

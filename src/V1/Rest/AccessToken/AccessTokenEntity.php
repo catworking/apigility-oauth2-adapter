@@ -80,7 +80,7 @@ class AccessTokenEntity extends ApigilityEntity
     
     public function getExpires()
     {
-        return $this->expires;
+        return $this->expires->getTimestamp();
     }
     
     public function setScope($scope)

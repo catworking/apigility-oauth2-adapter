@@ -38,12 +38,11 @@ class AccessTokenService
     }
     
     /**
-     * 获取一个横幅广告
+     * 获取一个access_token
      *
-     * @param $banner_id
-     * @return \ApigilityAd\DoctrineEntity\Banner
+     * @param $access_token
+     * @return \ApigilityOauth2Adapter\DoctrineEntity\OauthAccessToken
      * @throws \Exception
-     * @internal param $position_id
      */
     public function getAccessToken($access_token)
     {
@@ -53,22 +52,22 @@ class AccessTokenService
     }
     
     /**
-     * 通过user_id获取access_token
+     * 获取某个用户的access_token
      *
      * @param $params
      * @return DoctrinePaginatorAdapter
      */
-    public function getAccessTokens($params)
+    public function getAccessTokens($params, $user)
     {
         $qb = new QueryBuilder($this->em);
         $qb->select('o')->from('ApigilityOauth2Adapter\DoctrineEntity\OauthAccessToken', 'o');
     
         $where = null;
-        if (isset($params->user_id)) {
+        if (isset($params->user_id) && $user->getId() == $params->user_id) {
             if (!empty($where)) $where .= ' AND ';
-            $where = 'o.user_id = :user_id';
+            $where = 'o.user = :user_id';
         } else {
-            throw new \Exception('用户标识不存在', 404);
+            throw new \Exception('未识别的用户标识', 404);
         }
     
         if (!empty($where)) {
@@ -81,14 +80,20 @@ class AccessTokenService
     }
     
     /**
-     * 删除一个Banner广告
+     * 删除一个access_token
      *
      * @param $banner_id
+     * @param $user
      * @return bool
      */
-    public function deleteAccessToken($access_token)
+    public function deleteAccessToken($access_token, $user)
     {
         $token = $this->getAccessToken($access_token);
+        $user_id = $token->getUser()->getId();
+        
+        if ($user_id != $user->getId()) {
+            throw new \Exception('未识别的用户标识', 404);
+        }
     
         if ($token instanceof DoctrineEntity\OauthAccessToken) {
             $this->em->remove($token);

@@ -31,12 +31,13 @@ return [
             'collection_name' => 'access_token',
             'entity_http_methods' => [
                 0 => 'DELETE',
-                1 => 'GET',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
             ],
-            'collection_query_whitelist' => [],
+            'collection_query_whitelist' => [
+                0 => 'user_id',
+            ],
             'page_size' => 25,
             'page_size_param' => null,
             'entity_class' => \ApigilityOauth2Adapter\V1\Rest\AccessToken\AccessTokenEntity::class,
@@ -82,7 +83,7 @@ return [
         'authorization' => [
             'ApigilityOauth2Adapter\\V1\\Rest\\AccessToken\\Controller' => [
                 'collection' => [
-                    'GET' => false,
+                    'GET' => true,
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
@@ -93,7 +94,7 @@ return [
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
-                    'DELETE' => false,
+                    'DELETE' => true,
                 ],
             ],
         ],
