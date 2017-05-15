@@ -1,8 +1,9 @@
 <?php
 namespace ApigilityOauth2Adapter\V1\Rest\AccessToken;
 
-use Zend\Paginator\Paginator;
+use ApigilityCatworkFoundation\Base\ApigilityCollection;
 
-class AccessTokenCollection extends Paginator
+class AccessTokenCollection extends ApigilityCollection
 {
+    protected $itemType = AccessTokenEntity::class;
 }

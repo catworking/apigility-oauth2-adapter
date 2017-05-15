@@ -1,11 +1,24 @@
 <?php
 namespace ApigilityOauth2Adapter\V1\Rest\AccessToken;
 
+use Zend\ServiceManager\ServiceManager;
 use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\AbstractResourceListener;
+use ApigilityCatworkFoundation\Base\ApigilityResource;
 
-class AccessTokenResource extends AbstractResourceListener
+class AccessTokenResource extends ApigilityResource
 {
+    /**
+     * @var \ApigilityAd\Service\BannerService
+     */
+    protected $accessTokenService;
+    
+    public function __construct(ServiceManager $services)
+    {
+        parent::__construct($services);
+    
+        $this->accessTokenService = $this->serviceManager->get('ApigilityOauth2Adapter\Service\AccessTokenService');
+    }
+    
     /**
      * Create a resource
      *
@@ -25,7 +38,11 @@ class AccessTokenResource extends AbstractResourceListener
      */
     public function delete($id)
     {
-        return new ApiProblem(405, 'The DELETE method has not been defined for individual resources');
+        try {
+            return $this->accessTokenService->deleteAccessToken($id);
+        } catch (\Exception $exception) {
+            return new ApiProblem($exception->getCode(), $exception->getMessage());
+        }
     }
 
     /**
@@ -47,18 +64,20 @@ class AccessTokenResource extends AbstractResourceListener
      */
     public function fetch($id)
     {
-        return new ApiProblem(405, 'The GET method has not been defined for individual resources');
+        try {
+            return new AccessTokenEntity($this->accessTokenService->getAccessToken($id), $this->serviceManager);
+        } catch (\Exception $exception) {
+            return new ApiProblem($exception->getCode(), $exception->getMessage());
+        }
     }
 
-    /**
-     * Fetch all or a subset of resources
-     *
-     * @param  array $params
-     * @return ApiProblem|mixed
-     */
     public function fetchAll($params = [])
     {
-        return new ApiProblem(405, 'The GET method has not been defined for collections');
+        try {
+            return new AccessTokenCollection($this->accessTokenService->getAccessTokens($params), $this->serviceManager);
+        } catch (\Exception $exception) {
+            return new ApiProblem($exception->getCode(), $exception->getMessage());
+        }
     }
 
     /**

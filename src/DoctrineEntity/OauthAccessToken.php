@@ -47,4 +47,59 @@ class OauthAccessToken
      * @Column(type="string", length=2000, nullable=true)
      */
     protected $scope;
+    
+    public function setAccessToken($access_token)
+    {
+        $this->access_token = $access_token;
+        return $this;
+    }
+    
+    public function getAccessToken()
+    {
+        return $this->access_token;
+    }
+    
+    public function setClientId($client_id)
+    {
+        $this->client_id = $client_id;
+        return $this;
+    }
+    
+    public function getClientId()
+    {
+        return $this->client_id;
+    }
+    
+    public function setUser($user)
+    {
+        $this->user = $user;
+        return $this;
+    }
+    
+    public function getUser()
+    {
+        return $this->user;
+    }
+    
+    public function setExpires($expires)
+    {
+        $this->expires = $expires;
+        return $this;
+    }
+    
+    public function getExpires()
+    {
+        return $this->expires;
+    }
+    
+    public function setScope($scope)
+    {
+        $this->scope = $scope;
+        return $this;
+    }
+    
+    public function getScope()
+    {
+        return $this->scope;
+    }
 }

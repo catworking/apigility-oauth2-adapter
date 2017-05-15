@@ -5,6 +5,6 @@ class AccessTokenResourceFactory
 {
     public function __invoke($services)
     {
-        return new AccessTokenResource();
+        return new AccessTokenResource($services);
     }
 }

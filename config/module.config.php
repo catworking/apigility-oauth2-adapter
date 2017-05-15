@@ -31,6 +31,7 @@ return [
             'collection_name' => 'access_token',
             'entity_http_methods' => [
                 0 => 'DELETE',
+                1 => 'GET',
             ],
             'collection_http_methods' => [
                 0 => 'GET',
@@ -81,7 +82,7 @@ return [
         'authorization' => [
             'ApigilityOauth2Adapter\\V1\\Rest\\AccessToken\\Controller' => [
                 'collection' => [
-                    'GET' => true,
+                    'GET' => false,
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
@@ -92,7 +93,7 @@ return [
                     'POST' => false,
                     'PUT' => false,
                     'PATCH' => false,
-                    'DELETE' => true,
+                    'DELETE' => false,
                 ],
             ],
         ],

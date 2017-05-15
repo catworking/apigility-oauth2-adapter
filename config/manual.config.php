@@ -43,6 +43,7 @@ return [
     'service_manager' => array(
         'factories' => array(
             'ApigilityOauth2Adapter\OauthUserManager' => 'ApigilityOauth2Adapter\OauthUserManagerFactory',
+            'ApigilityOauth2Adapter\Service\AccessTokenService'=>'ApigilityOauth2Adapter\Service\AccessTokenServiceFactory',
         ),
     )
 ];
